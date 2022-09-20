@@ -8,6 +8,7 @@
         $_SESSION["data_office"] = array();
     }
 
+<<<<<<< HEAD
    
 
     function insertOfficeData(){
@@ -41,5 +42,24 @@
 
     function deleteOfficeData(){
         unset($_SESSION["data_office"][$_POST["id"]]);
+=======
+    function insertOfficeData(){
+        $newOffice = new Office();
+        $newOffice->id = count($_SESSION["data_office"]);
+        $newOffice->officeName = $_POST["nama"];
+        $newOffice->address = $_POST["address"];
+        $newOffice->city = $_POST["city"];
+        $newOffice->phone = $_POST["phone"];
+        array_push($_SESSION["data_office"], $newOffice);
+
+    }
+
+    function getOfficeData(){
+        return unserialize(serialize($_SESSION["data_office"]));
+    }
+
+    function deleteOfficeData($id){
+        unset($_SESSION["data_office"][$id]);
+>>>>>>> 33c7d779b515b324591beae52b66ef1c7d28ede5
     }
 ?>  
