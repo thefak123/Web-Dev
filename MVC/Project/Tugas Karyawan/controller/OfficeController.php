@@ -7,13 +7,12 @@
     if(!isset($_SESSION["data_office"])){
         $_SESSION["data_office"] = array();
     }
-
-<<<<<<< HEAD
+    echo "<script>console.log(" . json_decode($_SESSION["data_office"][0])->id .");</script>";
    
 
     function insertOfficeData(){
         $newOffice = new Office();
-        $newOffice->id = count($_SESSION["data_office"]) != 0 ? json_decode($_SESSION["data_office"][count($_SESSION["data_office"]) - 1])->id + 1 : 0;
+        $newOffice->id = count($_SESSION["data_office"]) != 0 ? json_decode(end($_SESSION["data_office"]))->id + 1 : 0;
         $newOffice->officeName = $_POST["officeName"];
         $newOffice->address = $_POST["address"];
         $newOffice->city = $_POST["city"];
@@ -23,7 +22,7 @@
     }
 
     function updateOffice(){
-      
+        
         
         $newOffice = new Office();
         $newOffice->id = $_POST["id"];
@@ -31,8 +30,17 @@
         $newOffice->address = $_POST["address"];
         $newOffice->city = $_POST["city"];
         $newOffice->phone = $_POST["phone"];
-    
-        $_SESSION["data_office"][(int) $_POST["id"]] = json_encode($newOffice);
+
+        foreach($_SESSION["data_office"] as $index => $data){
+            $data = json_decode($data);
+            
+            if($data->id == $_POST["id"]){
+                
+                $_SESSION["data_office"][$index] = json_encode($newOffice);
+                break;
+            }
+        }
+       
         
     }
 
@@ -41,25 +49,12 @@
     }
 
     function deleteOfficeData(){
-        unset($_SESSION["data_office"][$_POST["id"]]);
-=======
-    function insertOfficeData(){
-        $newOffice = new Office();
-        $newOffice->id = count($_SESSION["data_office"]);
-        $newOffice->officeName = $_POST["nama"];
-        $newOffice->address = $_POST["address"];
-        $newOffice->city = $_POST["city"];
-        $newOffice->phone = $_POST["phone"];
-        array_push($_SESSION["data_office"], $newOffice);
-
-    }
-
-    function getOfficeData(){
-        return unserialize(serialize($_SESSION["data_office"]));
-    }
-
-    function deleteOfficeData($id){
-        unset($_SESSION["data_office"][$id]);
->>>>>>> 33c7d779b515b324591beae52b66ef1c7d28ede5
+        foreach($_SESSION["data_office"] as $index => $data){
+            $data = json_decode($data);
+            if($data->id == $_POST["id"]){
+                unset($_SESSION["data_office"][$index]);
+            }
+        }
+        
     }
 ?>  

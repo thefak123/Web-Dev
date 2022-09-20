@@ -38,6 +38,7 @@
     <table class="table table-dark mt-2 w-100 mx-auto">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Employee</th>
                 <th>Office</th>
                 <th>Update</th>
@@ -51,6 +52,7 @@
            
 
                 <tr>
+                    <td><?= $data["model"]->id ?></td>
                     <td><?= $data["employee"]->karyawanName ?></td>
                     <td><?= $data["dataOffice"]->officeName  ?></td>
                     <td>
@@ -78,14 +80,18 @@
     <h1 class="mt-2" id="formTitle">Tambah Relasi</h1>
     <form method="POST" id="confirmForm">
         <select class="form-select" name="idK">
-            <?php foreach(index() as $index => $karyawan){  ?>
+            <?php foreach(index() as  $karyawan){  
+                $karyawan = json_decode($karyawan);
+                ?>
                 
-                <option value="<?=$index ?>" <?= ($curRelation != "") ? (($index == (int) json_decode($curRelation)->idKaryawan) ? 'selected="selected"' : "") : ""?> ><?= $karyawan->nama ?></option>
+                <option value="<?=$karyawan->id ?>" <?= ($curRelation != "") ? (($karyawan->id == (int) json_decode($curRelation)->idKaryawan) ? 'selected="selected"' : "") : ""?> ><?= $karyawan->nama ?></option>
             <?php } ?>
         </select>
         <select class="form-select" name="idO">
-            <?php foreach(getOfficeData() as $index => $office){  ?>
-                <option value="<?=$index ?>" <?= ($curRelation != "") ? (($index == (int) json_decode($curRelation)->idOffice) ? 'selected="selected"' : "") : ""?>><?= $office->officeName ?></option>
+            <?php foreach(getOfficeData() as  $office){ 
+                $office = json_decode($office);
+                ?>
+                <option value="<?=$office->id ?>" <?= ($curRelation != "") ? (($office->id == (int) json_decode($curRelation)->idOffice) ? 'selected="selected"' : "") : ""?>><?= $office->officeName ?></option>
             <?php } ?>
         </select>
         <input type="hidden" name="<?= ($curId != "") ? 'update' : 'add' ?>">
