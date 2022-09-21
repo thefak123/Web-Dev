@@ -34,6 +34,10 @@
 </head>
 <body>
     <?php include("header.php"); ?>
+    <?php $karyawanData =  getKaryawanData();
+    $officeData = getOfficeData();
+    if(count($karyawanData) > 0 && count($officeData) > 0){ 
+    ?>
     <div class="container">
     <table class="table table-dark mt-2 w-100 mx-auto">
         <thead>
@@ -47,10 +51,7 @@
         </thead>
         <tbody>
             <?php 
-                foreach(getRelationData() as $index => $data){ 
-            ?>
-           
-
+                foreach(getRelationData() as $index => $data){ ?>
                 <tr>
                     <td><?= $data["model"]->id ?></td>
                     <td><?= $data["employee"]->karyawanName ?></td>
@@ -60,7 +61,6 @@
                             <input type="hidden" name="updateId" value="<?= $data["model"]->id ?>">
                             <button class="btn btn-primary">EDIT</button>
                         </form>
-                        
                     </td>
                     <td>
                         <form method="POST" action="" id="confirmDeleteForm">
@@ -68,7 +68,6 @@
                             <input type="hidden" name="delete">
                             <button class="btn btn-danger" type="button" id="btnDeleteConfirm">DELETE</button>
                         </form>
-                        
                     </td>
                 </tr>
             <?php } ?>
@@ -80,19 +79,16 @@
     <h1 class="mt-2" id="formTitle">Tambah Relasi</h1>
     <form method="POST" id="confirmForm">
         <select class="form-select" name="idK">
-            <?php foreach(getKaryawanData() as  $karyawan){  
-                $karyawan = json_decode($karyawan);
-                ?>
-                
+            <?php foreach($karyawanData as  $karyawan){  
+                $karyawan = json_decode($karyawan); ?>
                 <option value="<?=$karyawan->id ?>" 
                 <?= ($curRelation != "") ? (($karyawan->id == (int) json_decode($curRelation)->idKaryawan) ? 'selected="selected"' : "") : ""?> >
                 <?= $karyawan->nama ?></option>
             <?php } ?>
         </select>
         <select class="form-select" name="idO">
-            <?php foreach(getOfficeData() as  $office){ 
-                $office = json_decode($office);
-                ?>
+            <?php foreach($officeData as  $office){ 
+                $office = json_decode($office);?>
                 <option value="<?=$office->id ?>" 
                 <?= ($curRelation != "") ? (($office->id == (int) json_decode($curRelation)->idOffice) ? 'selected="selected"' : "") : ""?>>
                 <?= $office->officeName ?></option>
@@ -103,6 +99,11 @@
         <button type="button" class="btn btn-primary mt-2"  id="btnConfirm"> <?= ($curId != "")  ? "Update" : "Save" ?></button>
     </form>
     </div>
+    <?php }else{  ?>
+        <div class="container vw-100 vh-100 d-flex justify-content-center align-items-center">
+            <h1 class="h-50">Silahkan Isi Data Karyawan dan Office Terlebih Dahulu</h1>
+        </div>
+    <?php }?>
     <script type="text/javascript">
         var id = '<?= $curId?>';
         var value = '<?= $curRelation ?>';  
