@@ -30,7 +30,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <title>Challenge</title>
+    <title>Relation</title>
 </head>
 <body>
     <?php include("header.php"); ?>
@@ -84,14 +84,18 @@
                 $karyawan = json_decode($karyawan);
                 ?>
                 
-                <option value="<?=$karyawan->id ?>" <?= ($curRelation != "") ? (($karyawan->id == (int) json_decode($curRelation)->idKaryawan) ? 'selected="selected"' : "") : ""?> ><?= $karyawan->nama ?></option>
+                <option value="<?=$karyawan->id ?>" 
+                <?= ($curRelation != "") ? (($karyawan->id == (int) json_decode($curRelation)->idKaryawan) ? 'selected="selected"' : "") : ""?> >
+                <?= $karyawan->nama ?></option>
             <?php } ?>
         </select>
         <select class="form-select" name="idO">
             <?php foreach(getOfficeData() as  $office){ 
                 $office = json_decode($office);
                 ?>
-                <option value="<?=$office->id ?>" <?= ($curRelation != "") ? (($office->id == (int) json_decode($curRelation)->idOffice) ? 'selected="selected"' : "") : ""?>><?= $office->officeName ?></option>
+                <option value="<?=$office->id ?>" 
+                <?= ($curRelation != "") ? (($office->id == (int) json_decode($curRelation)->idOffice) ? 'selected="selected"' : "") : ""?>>
+                <?= $office->officeName ?></option>
             <?php } ?>
         </select>
         <input type="hidden" name="<?= ($curId != "") ? 'update' : 'add' ?>">

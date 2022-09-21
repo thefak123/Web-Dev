@@ -13,7 +13,7 @@
     }
     if(isset($_GET["updateId"])){
         $curId =  $_GET["updateId"];
-        foreach($_SESSION["data_office"] as $index => $data){
+        foreach($_SESSION["data_karyawan"] as $index => $data){
             
             $data = json_decode($data);
             
@@ -35,7 +35,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <title>View</title>
-
 </head>
 <body>
     <?php include("header.php"); ?>
@@ -58,8 +57,6 @@
                 $karyawan = json_decode($karyawan);
             ?>
             <div >
-
-            
                 <tr>
                     <td><?= $karyawan->id?></td>
                     <td><?= $karyawan->nama?></td>

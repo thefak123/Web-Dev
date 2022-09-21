@@ -7,9 +7,7 @@
     if(!isset($_SESSION["data_office"])){
         $_SESSION["data_office"] = array();
     }
-    // echo "<script>console.log(" . json_decode($_SESSION["data_office"][0])->id .");</script>";
    
-
     function insertOfficeData(){
         if(!is_numeric($_POST["phone"])){
             echo json_encode("wrong");
@@ -22,9 +20,7 @@
             $newOffice->phone = $_POST["phone"];
             array_push($_SESSION["data_office"], json_encode($newOffice));
             echo json_encode("success");
-        }
-        
-        
+        }      
     }
 
     function updateOffice(){
@@ -49,9 +45,6 @@
             }
             echo json_encode("success");
         }
-        
-        
-        
     }
 
     function getOfficeData(){

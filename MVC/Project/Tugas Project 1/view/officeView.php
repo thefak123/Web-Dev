@@ -66,7 +66,6 @@
                                 Edit
                             </button>
                         </form>
-                        
                     </td>
                     <td>
                         <form method="POST" id="confirmDeleteForm">

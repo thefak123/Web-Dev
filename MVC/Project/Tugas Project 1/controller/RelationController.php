@@ -31,7 +31,7 @@
     }
 
     function checkIfExist(){
-        foreach($_SESSION["data_relation"] as $index => $data){
+        foreach($_SESSION["data_relation"] as $data){
             $data = json_decode($data);
             if($data->idKaryawan == $_POST["idK"] && $data->idOffice == $_POST["idO"]){
                 return true;
@@ -39,16 +39,6 @@
             }
         }
         return false;
-    }
-
-    function deleteRelation(){
-
-        foreach($_SESSION["data_relation"] as $index => $data){
-            $data = json_decode($data);
-            if($data->id == $_POST["id"]){
-                unset($_SESSION["data_relation"][$index]);
-            }
-        }
     }
 
     function updateRelation(){
@@ -69,7 +59,17 @@
             echo json_encode("already exist");
         }
         
-    
+    }
+
+
+    function deleteRelation(){
+
+        foreach($_SESSION["data_relation"] as $index => $data){
+            $data = json_decode($data);
+            if($data->id == $_POST["id"]){
+                unset($_SESSION["data_relation"][$index]);
+            }
+        }
     }
 
     function getRelationData(){

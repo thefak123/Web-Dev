@@ -1,19 +1,13 @@
 <?php 
     include_once("../model/Karyawan.php");
-    include_once("../model/Office.php");
+
     if(!isset($_SESSION)){
         session_start();
-     
     }
-
   
     if(!isset($_SESSION["data_karyawan"])){
         $_SESSION["data_karyawan"] = array();
     }
-
-   
-
-    
 
     function insert(){
         if(!is_numeric($_POST["usia"])){
