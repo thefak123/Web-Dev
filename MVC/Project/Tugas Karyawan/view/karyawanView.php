@@ -54,7 +54,7 @@
         </thead>
         <tbody>
             <?php 
-                foreach(index() as $karyawan){ 
+                foreach(getKaryawanData() as $karyawan){ 
                 $karyawan = json_decode($karyawan);
             ?>
             <div >

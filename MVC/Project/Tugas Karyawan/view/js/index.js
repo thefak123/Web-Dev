@@ -1,21 +1,30 @@
 $("#confirmForm #btnConfirm").on("click", function(e){
     const form = $("#confirmForm");
     
-    $.post("", form.serialize(), function(response, status){
-      
-        if(status === "success"){
-
-            Swal.fire({
-                title: (value != "") ? 'Data berhasil diupdate' :'Data berhasil ditambahkan',
-                confirmButtonText: 'Sippp',
-                allowOutsideClick: false
-                }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    window.location.reload();
-                } 
-                })
+    
+    $.post("", form.serialize(), function(response){
+        var text = "";
+        var buttonText = "Sippp";
+        if(response.includes("success")){
+          text = (value != "") ? 'Data berhasil diupdate' :'Data berhasil ditambahkan';
+        }else if(response.includes("already exist")){
+          text = "Data tersebut sudah terinput";
+          buttonText = "Ok";
+        }else if(response.includes("wrong")){
+          text = "Silahkan input dengan format yang benar";
+          buttonText = "Ok, saya check kembali";
         }
+
+        Swal.fire({
+          title: text,
+          confirmButtonText: buttonText,
+          allowOutsideClick: false
+          }).then((result) => {
+          /* Read more about isConfirmed, isDenied below */
+          if (result.isConfirmed) {
+              window.location.reload();
+          } 
+        })
     })
     
 })

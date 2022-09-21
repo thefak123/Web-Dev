@@ -1,7 +1,7 @@
 <?php
     require_once("../controller/KaryawanController.php"); 
     require_once("../controller/OfficeController.php"); 
-    require_once("../controller/controller.php");
+    require_once("../controller/RelationController.php");
     
     $curRelation = "";
     $curId = "";
@@ -21,7 +21,7 @@
         $curId = $_GET["updateId"];
         $curRelation = $_SESSION["data_relation"][$_GET["updateId"]];
     }
-    echo "<script>console.log(" . json_encode($_SESSION["data_relation"]) . ");</script>";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +80,7 @@
     <h1 class="mt-2" id="formTitle">Tambah Relasi</h1>
     <form method="POST" id="confirmForm">
         <select class="form-select" name="idK">
-            <?php foreach(index() as  $karyawan){  
+            <?php foreach(getKaryawanData() as  $karyawan){  
                 $karyawan = json_decode($karyawan);
                 ?>
                 
@@ -96,7 +96,7 @@
         </select>
         <input type="hidden" name="<?= ($curId != "") ? 'update' : 'add' ?>">
         <input type="hidden" name="id" value="<?= ($curId != "") ? $curId : '' ?>">
-        <button type="submit" class="btn btn-primary mt-2"  id="btnConfirm"> <?= ($curId != "")  ? "Update" : "Save" ?></button>
+        <button type="button" class="btn btn-primary mt-2"  id="btnConfirm"> <?= ($curId != "")  ? "Update" : "Save" ?></button>
     </form>
     </div>
     <script type="text/javascript">

@@ -1,7 +1,7 @@
 
 <?php 
     
-    include_once("../model/Relational.php");
+    include_once("../model/RelationModel.php");
     include_once("../model/Office.php");
     include_once("../model/Karyawan.php");
     if(!isset($_SESSION)){
@@ -15,12 +15,30 @@
    
     
     function save(){
-        $relationModel = new Relational();
-        $relationModel->id = count($_SESSION["data_relation"]) != 0 ? json_decode(end($_SESSION["data_relation"]))->id + 1 : 0;
-        $relationModel->idKaryawan = $_POST["idK"];
-        $relationModel->idOffice = $_POST["idO"];
-    
-        array_push($_SESSION["data_relation"], json_encode($relationModel));
+        if(!checkIfExist()){
+            $relationModel = new Relational();
+            $relationModel->id = count($_SESSION["data_relation"]) != 0 ? json_decode(end($_SESSION["data_relation"]))->id + 1 : 0;
+            $relationModel->idKaryawan = $_POST["idK"];
+            $relationModel->idOffice = $_POST["idO"];
+        
+            array_push($_SESSION["data_relation"], json_encode($relationModel));
+            echo json_encode("success");
+        }else{
+            echo json_encode("already exist");
+        }
+
+        
+    }
+
+    function checkIfExist(){
+        foreach($_SESSION["data_relation"] as $index => $data){
+            $data = json_decode($data);
+            if($data->idKaryawan == $_POST["idK"] && $data->idOffice == $_POST["idO"]){
+                return true;
+                
+            }
+        }
+        return false;
     }
 
     function deleteRelation(){
@@ -34,16 +52,23 @@
     }
 
     function updateRelation(){
-        $relationModel = new Relational();
-        $relationModel->id = $_POST["id"];
-        $relationModel->idKaryawan = $_POST["idK"];
-        $relationModel->idOffice = $_POST["idO"];
-        foreach($_SESSION["data_relation"] as $index => $data){
-            $data = json_decode($data);
-            if($data->id == $_POST["id"]){
-                $_SESSION["data_relation"][$index] = json_encode($relationModel);
+        if(!checkIfExist()){
+            $relationModel = new Relational();
+            $relationModel->id = $_POST["id"];
+            $relationModel->idKaryawan = $_POST["idK"];
+            $relationModel->idOffice = $_POST["idO"];
+            foreach($_SESSION["data_relation"] as $index => $data){
+                $data = json_decode($data);
+                if($data->id == $_POST["id"]){
+                    $_SESSION["data_relation"][$index] = json_encode($relationModel);
+                }
             }
+
+           echo json_encode("success");  
+        }else{
+            echo json_encode("already exist");
         }
+        
     
     }
 
